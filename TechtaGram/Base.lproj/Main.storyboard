@@ -1,25 +1,137 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TechtaGram" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QLt-cx-Ap0">
+                                <rect key="frame" x="123" y="390" width="75" height="75"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="post"/>
+                                <connections>
+                                    <action selector="snsPost" destination="BYZ-38-t0r" eventType="touchUpInside" id="PX2-kb-lGd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="am3-OO-s4C">
+                                <rect key="frame" x="20" y="390" width="75" height="75"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="album"/>
+                                <connections>
+                                    <action selector="openAlbum" destination="BYZ-38-t0r" eventType="touchUpInside" id="x0l-bD-6A4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EKZ-gd-4Tv">
+                                <rect key="frame" x="123" y="473" width="75" height="75"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="save"/>
+                                <connections>
+                                    <action selector="alertBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qAP-bw-AbG"/>
+                                    <action selector="savePhoto" destination="BYZ-38-t0r" eventType="touchUpInside" id="7On-aZ-III"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Lb-y4-w85">
+                                <rect key="frame" x="219" y="304" width="75" height="30"/>
+                                <color key="backgroundColor" red="0.9549127221" green="0.87947791809999998" blue="0.79951053859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="grey"/>
+                                <connections>
+                                    <action selector="colorfiltergray" destination="BYZ-38-t0r" eventType="touchUpInside" id="kB9-Xo-GDU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHs-IZ-qtj">
+                                <rect key="frame" x="123" y="214" width="75" height="30"/>
+                                <color key="backgroundColor" red="0.9549127221" green="0.87947791809999998" blue="0.79951053859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="curve"/>
+                                <connections>
+                                    <action selector="colorfiltercurve" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Gf-FZ-aDl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IW3-fj-mtB">
+                                <rect key="frame" x="20" y="473" width="75" height="75"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="take photo"/>
+                                <connections>
+                                    <action selector="takePhoto" destination="BYZ-38-t0r" eventType="touchUpInside" id="JSA-4Z-IIB"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3I-Ey-NG8">
+                                <rect key="frame" x="0.0" y="28" width="320" height="320"/>
+                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TV8-iv-WP1">
+                                <rect key="frame" x="219" y="266" width="75" height="30"/>
+                                <color key="backgroundColor" red="0.9549127221" green="0.87947791809999998" blue="0.79951053859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="color filter2"/>
+                                <connections>
+                                    <action selector="colorFilter2" destination="BYZ-38-t0r" eventType="touchUpInside" id="cYJ-Xo-at8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0JG-QZ-Ds6">
+                                <rect key="frame" x="219" y="190" width="75" height="30"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="sepia"/>
+                                <connections>
+                                    <action selector="colorfiltersepia" destination="BYZ-38-t0r" eventType="touchUpInside" id="Phx-HM-Dhy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VPA-va-Qqk">
+                                <rect key="frame" x="219" y="228" width="75" height="30"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="color filter"/>
+                                <connections>
+                                    <action selector="colorFilter" destination="BYZ-38-t0r" eventType="touchUpInside" id="xS5-Q7-MLX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KhD-ZV-ghL">
+                                <rect key="frame" x="122" y="274" width="75" height="30"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="チルト"/>
+                                <connections>
+                                    <action selector="colorfilterchilt" destination="BYZ-38-t0r" eventType="touchUpInside" id="4bF-ix-eci"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asD-7H-Iou">
+                                <rect key="frame" x="132" y="318" width="55" height="30"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="process"/>
+                                <connections>
+                                    <action selector="CIPhotoEffectProcess" destination="BYZ-38-t0r" eventType="touchUpInside" id="JXT-Al-4YB"/>
+                                    <action selector="photoEffectTransfer" destination="BYZ-38-t0r" eventType="touchUpInside" id="sb1-2c-c6z"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YsI-r1-f6h">
+                                <rect key="frame" x="0.0" y="57" width="319" height="87"/>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xxo-35-tnQ">
+                                <rect key="frame" x="43" y="294" width="52" height="30"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="chrome"/>
+                                <connections>
+                                    <action selector="CIPhotoEffectChrome" destination="BYZ-38-t0r" eventType="touchUpInside" id="qvn-4F-GTp"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="cameraImageView" destination="s3I-Ey-NG8" id="uW9-TQ-BNc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="130" y="319"/>
         </scene>
     </scenes>
 </document>
