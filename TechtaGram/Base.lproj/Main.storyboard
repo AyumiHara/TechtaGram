@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QLt-cx-Ap0">
-                                <rect key="frame" x="123" y="390" width="75" height="75"/>
+                                <rect key="frame" x="245" y="350" width="75" height="75"/>
                                 <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="post"/>
                                 <connections>
@@ -26,7 +26,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="am3-OO-s4C">
-                                <rect key="frame" x="20" y="390" width="75" height="75"/>
+                                <rect key="frame" x="0.0" y="350" width="75" height="75"/>
                                 <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="album"/>
                                 <connections>
@@ -34,7 +34,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EKZ-gd-4Tv">
-                                <rect key="frame" x="123" y="473" width="75" height="75"/>
+                                <rect key="frame" x="163" y="350" width="75" height="75"/>
                                 <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="save"/>
                                 <connections>
@@ -59,7 +59,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IW3-fj-mtB">
-                                <rect key="frame" x="20" y="473" width="75" height="75"/>
+                                <rect key="frame" x="82" y="350" width="75" height="75"/>
                                 <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="take photo"/>
                                 <connections>
@@ -95,11 +95,19 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KhD-ZV-ghL">
-                                <rect key="frame" x="122" y="274" width="75" height="30"/>
+                                <rect key="frame" x="112" y="269" width="75" height="30"/>
                                 <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="チルト"/>
                                 <connections>
                                     <action selector="colorfilterchilt" destination="BYZ-38-t0r" eventType="touchUpInside" id="4bF-ix-eci"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xxo-35-tnQ">
+                                <rect key="frame" x="43" y="294" width="52" height="30"/>
+                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="chrome"/>
+                                <connections>
+                                    <action selector="CIPhotoEffectChrome" destination="BYZ-38-t0r" eventType="touchUpInside" id="qvn-4F-GTp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asD-7H-Iou">
@@ -111,17 +119,9 @@
                                     <action selector="photoEffectTransfer" destination="BYZ-38-t0r" eventType="touchUpInside" id="sb1-2c-c6z"/>
                                 </connections>
                             </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YsI-r1-f6h">
-                                <rect key="frame" x="0.0" y="57" width="319" height="87"/>
-                            </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xxo-35-tnQ">
-                                <rect key="frame" x="43" y="294" width="52" height="30"/>
-                                <color key="backgroundColor" red="0.95491272211074829" green="0.87947791814804077" blue="0.79951053857803345" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="chrome"/>
-                                <connections>
-                                    <action selector="CIPhotoEffectChrome" destination="BYZ-38-t0r" eventType="touchUpInside" id="qvn-4F-GTp"/>
-                                </connections>
-                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="41R-XN-XNJ">
+                                <rect key="frame" x="19" y="446" width="90" height="90"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
