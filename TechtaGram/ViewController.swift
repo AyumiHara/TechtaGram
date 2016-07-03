@@ -77,7 +77,8 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        collectionView.
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! CustomCollectionViewCell
+        cameraImageView.image = cell.ImageView.image
         
         
     }
