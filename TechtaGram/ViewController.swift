@@ -12,26 +12,113 @@ import AssetsLibrary
 
 import Accounts
 
-class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINavigationControllerDelegate {
+class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINavigationControllerDelegate,UICollectionViewDataSource {
     
     @IBOutlet var cameraImageView: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
-    var originalImage : UIImage! = nil
-    var filter : CIFilter! = nil
-    var filerUtil : FilterUtil! = nil
+    
+    var originalImage : UIImage!
+    var filter : CIFilter!
+    var filerUtil : FilterUtil!
+    
     
     //var assetCollection: PHAssetCollection!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filerUtil = FilterUtil()
+       
+        
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    @IBAction func selected(sender: AnyObject) {
+        
+        
+        var imagePikerContoroller: UIImagePickerController = UIImagePickerController()
+        imagePikerContoroller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        imagePikerContoroller.allowsEditing = true
+        self.presentViewController(imagePikerContoroller, animated: true, completion: nil)
+        imagePikerContoroller.delegate = self
+    }
+    
+    func show(){
+        
+    filerUtil = FilterUtil()
+    let nib:UINib = UINib(nibName: "CustomCollectionViewCell",bundle: nil)
+    
+    let layout = UICollectionViewFlowLayout()
+    
+    //originalImage = UIImage(named: "96.png")
+    
+    
+    // Cell一つ一つの大きさ.
+    layout.itemSize = CGSizeMake(200, 200)
+    collectionView.registerNib(nib, forCellWithReuseIdentifier: "Cell")
+    collectionView.dataSource = self
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CustomCollectionViewCell
+        
+        
+        
+        
+        cell.ImageView.image = setImage(indexPath.row).1
+        
+        cell.label.text = setImage(indexPath.row).0
+        return cell
+    }
+    
+    func  setImage(indexPath : Int) -> (String,UIImage){
+        
+       
+        
+        switch indexPath {
+        case 0:
+            //セピアの結果を返す
+            return ("セピア",filerUtil.colorFiltersepia(CIImage(image:originalImage)))
+        case 1:
+            //グレイの結果を返す
+            return("グレイ",filerUtil.colorFiltergray(originalImage))
+        case 2:
+            return("カーブ",filerUtil.colorFiltercurve(originalImage))
+        case 3:
+            return("フィルター１",filerUtil.colorFilter(originalImage))
+        default:
+            return("フィルター２",filerUtil.colorFilter2(originalImage))
+//        case 5:
+//            return("プロセス",filerUtil.CIPhotoEffectProcess(originalImage))
+//        default:
+//            return("クローム",filerUtil.CIPhotoEffectChrome(originalImage))
+            
+        }
+           }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        // 条件に従ってサイズを変更する。
+        
+        var size = CGSize(width: 100, height: 300) // Square
+            
+        
+        return size
+    }
+    
+    // セル数を返す(UITableViewでいうところの"tableView:numberOfRowsInSection:"
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5;
+    }
+    
+    override func viewWillLayoutSubviews() {
+        self.view.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
     
     @IBAction func takePhoto() {
         
@@ -75,139 +162,30 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
     
     
     @IBAction func colorFilter(){
-        cameraImageView.image = colorFilter(originalImage)
-
+        cameraImageView.image = filerUtil.colorFilter(originalImage)
+        
     }
     @IBAction func colorFilter2(){
-        cameraImageView.image = colorFilter2(originalImage)
+        cameraImageView.image = filerUtil.colorFilter2(originalImage)
         
     }
     
-    @IBAction func colorfiltergray(){
-        cameraImageView.image = colorFilter2(originalImage)
+    @IBAction func colorFiltergray(){
+        cameraImageView.image = filerUtil.colorFiltergray(originalImage)
         
     }
     
     
-    @IBAction func colorfiltercurve(){
-        
-        let filterImage : CIImage = CIImage(image: originalImage)!
-        
-        filter = CIFilter(name: "CIToneCurve" )!
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-        filter.setValue(CIVector(x: 0.0, y: 0.0), forKey: "inputPoint0")
-        filter.setValue(CIVector(x: 0.25, y: 0.1), forKey: "inputPoint1")
-        filter.setValue(CIVector(x: 0.5, y: 0.5), forKey: "inputPoint2")
-        filter.setValue(CIVector(x: 0.75, y: 0.9), forKey: "inputPoint3")
-        filter.setValue(CIVector(x: 1.0, y: 1.0), forKey: "inputPoint4")
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        cameraImageView.image = UIImage(CGImage: cgImage)
+    @IBAction func colorFiltercurve(){
+        cameraImageView.image = filerUtil.colorFiltercurve(originalImage)
         
     }
     
     @IBAction func colorfiltersepia(){
+        cameraImageView.image = filerUtil.colorFiltersepia(originalImage.CIImage)
         
-        let filterImage : CIImage = CIImage(image: originalImage)!
-        
-        //let ciImage:CIImage = CIImage(image:image);
-        filter = CIFilter(name: "CISepiaTone")!
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-        filter.setValue(0.8, forKey: "inputIntensity")
-        let ciContext:CIContext = CIContext(options: nil)
-        // let cgimg:CGImageRef = ciContext.createCGImage(filter.outputImage!, fromRect:filter.outputImage.extent())
-        
-        //image2に加工後のUIImage
-        //let image2:UIImage? = UIImage(CGImage: cgimg, scale: 1.0, orientation:UIImageOrientation.Up)
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        cameraImageView.image = UIImage(CGImage: cgImage)
         
     }
-    
-    
-    
-    @IBAction func colorfilterchilt(){
-       blendWithMask()
-    }
-    
-    func blurred() -> CIImage {
-        
-        let filterImage  = CIImage(image: originalImage)!
-        filter = CIFilter(name:"CIGaussianBlur")!
-        print(0)
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-         print(1)
-        filter.setValue(70, forKey: kCIInputRadiusKey)
-         print(2)
-        
-        let cropFilter = CIFilter(name: "CICrop")
-        cropFilter!.setValue(filter.outputImage, forKey: kCIInputImageKey)
-         print(3)
-        cropFilter!.setValue(CIVector(CGRect: filterImage.extent), forKey:"inputRectangle")
-         print(4)
-        
-        
-        
-        return cropFilter!.outputImage!
-    }
-    
-    
-    func topLinearGradient() -> CIImage {
-        let ciImage = CIImage(image: originalImage)
-        let filter = CIFilter(name: "CILinearGradient")
-        filter!.setValue(CIVector(x: 0, y: 0.75 * ciImage!.extent.height), forKey: "inputPoint0")
-        filter!.setValue(CIColor(red: 0, green: 1, blue: 0, alpha: 0.9), forKey: "inputColor0")
-        filter!.setValue(CIVector(x: 0, y: 0.5 * ciImage!.extent.height), forKey: "inputPoint1")
-        filter!.setValue(CIColor(red: 0, green: 1, blue: 0, alpha: 0), forKey: "inputColor1")
-        
-        let cropFilter = CIFilter(name: "CICrop")
-        cropFilter!.setValue(filter!.outputImage, forKey: kCIInputImageKey)
-        cropFilter!.setValue(CIVector(CGRect: ciImage!.extent), forKey: "inputRectangle")
-        
-        return cropFilter!.outputImage!
-    }
-    
-    func bottomLinearGradient() -> CIImage {
-        let ciImage = CIImage(image: originalImage)
-        let filter = CIFilter(name: "CILinearGradient")
-        filter!.setValue(CIVector(x: 0, y: 0.25 * ciImage!.extent.height), forKey: "inputPoint0")
-        filter!.setValue(CIColor(red: 0, green: 1, blue: 0, alpha: 0.9), forKey: "inputColor0")
-        filter!.setValue(CIVector(x: 0, y: 0.5 * ciImage!.extent.height), forKey: "inputPoint1")
-        filter!.setValue(CIColor(red: 0, green: 1, blue: 0, alpha: 0), forKey: "inputColor1")
-        
-        let cropFilter = CIFilter(name: "CICrop")
-        cropFilter!.setValue(filter!.outputImage, forKey: kCIInputImageKey)
-        cropFilter!.setValue(CIVector(CGRect: ciImage!.extent), forKey: "inputRectangle")
-        
-        return cropFilter!.outputImage!
-    }
-    
-    func additionCompositing() -> CIImage {
-        let context = CIContext(options: nil)
-        let filter = CIFilter(name: "CIAdditionCompositing")
-        filter!.setValue(topLinearGradient(), forKey: kCIInputImageKey)
-        filter!.setValue(bottomLinearGradient(), forKey: kCIInputBackgroundImageKey)
-        return filter!.outputImage!
-    }
-    
-    func blendWithMask() {
-        let context = CIContext(options: nil)
-        let ciImage = CIImage(image: originalImage
-        )
-        let filter = CIFilter(name: "CIBlendWithMask")
-        filter!.setValue(blurred(), forKey: kCIInputImageKey)
-        filter!.setValue(ciImage, forKey: kCIInputBackgroundImageKey)
-        filter!.setValue(additionCompositing(), forKey: kCIInputMaskImageKey)
-        
-        let extent = filter!.outputImage!.extent
-        let cgImage: CGImage = context.createCGImage(filter!.outputImage!, fromRect: extent)
-        
-        cameraImageView.image = UIImage(CGImage: cgImage)
-    }
-    
     
     @IBAction func CIPhotoEffectProcess(){
         
@@ -220,6 +198,8 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
         filter = CIFilter(name: "CIPhotoEffectChrome")
         outputImage()
     }
+    
+    
     func outputImage() {
         print(filter)
         let inputImage = CIImage(image: originalImage)
@@ -229,8 +209,8 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
         cameraImageView.image = UIImage(CGImage: cgImage)
     }
     
-   
-
+    
+    
     
     
     
@@ -250,6 +230,7 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info:  [String : AnyObject]) {
         cameraImageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
         originalImage = cameraImageView.image
+        show()
         dismissViewControllerAnimated(true, completion: nil)
         
         
@@ -266,7 +247,7 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
             UIActivityTypePostToWeibo,
             UIActivityTypeSaveToCameraRoll,
             UIActivityTypePrint,
-        ]
+            ]
         activityVC.excludedActivityTypes = excludedActivityTypes
         
         self.presentViewController(activityVC, animated: true, completion: nil)
@@ -298,202 +279,8 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
         presentViewController(alertController, animated: true, completion: nil)
     }
     
-    func colorFilter(originalImage : UIImage!) -> UIImage! {
-        
-        let filterImage : CIImage = CIImage(image: originalImage)!
-        
-        filter = CIFilter(name: "CIColorControls")!
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-        filter.setValue(1.0, forKey: "inputSaturation")
-        filter.setValue(0.5, forKey: "inputBrightness")
-        filter.setValue(2.5, forKey: "inputContrast")
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        
-        return UIImage(CGImage: cgImage)
-        
-    }
-    var filter2 : CIFilter!
-    
-    func colorFilter2(originalImage : UIImage!) -> UIImage! {
-        
-        let filterImage : CIImage = CIImage(image: originalImage)!
-        
-        filter = CIFilter(name: "CIColorControls")!
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-        filter.setValue(1.0, forKey: "inputSaturation")
-        filter.setValue(0.5, forKey: "inputBrightness")
-        filter.setValue(3.0, forKey: "inputContrast")
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        
-        return UIImage(CGImage: cgImage)
-        
-    }
-    
-    var filtergray : CIFilter!
-    
-    func colorFiltergray(originalImage : UIImage!) -> UIImage! {
-        
-        let filterImage : CIImage = CIImage(image: originalImage)!
-        
-        filter = CIFilter(name: "CIColorMonochrome")!
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-        filter.setValue(CIColor(red: 0.75, green: 0.75, blue: 0.75), forKey: "inputColor")
-        filter.setValue(1.0, forKey: "inputIntensity")
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        
-        return UIImage(CGImage: cgImage)
-        
-        
-    }
-    
-    var colorFiltercurve : CIFilter!
-    func colorFiltercurve(originalImage : UIImage!) -> UIImage! {
-        
-        let filterImage : CIImage = CIImage(image: originalImage)!
-        
-        filter = CIFilter(name: "CIToneCurve" )!
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-        filter.setValue(CIVector(x: 0.0, y: 0.0), forKey: "inputPoint0")
-        filter.setValue(CIVector(x: 0.25, y: 0.1), forKey: "inputPoint1")
-        filter.setValue(CIVector(x: 0.5, y: 0.5), forKey: "inputPoint2")
-        filter.setValue(CIVector(x: 0.75, y: 0.9), forKey: "inputPoint3")
-        filter.setValue(CIVector(x: 1.0, y: 1.0), forKey: "inputPoint4")
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        return UIImage(CGImage: cgImage)
-        
-    }
-    
-    var colorFiltersepia : CIFilter!
-    func colorFiltersepia(originalImage : UIImage!) -> UIImage! {
-        
-        let filterImage : CIImage = CIImage(image: originalImage)!
-        
-        filter = CIFilter(name: "CIToneCurve" )!
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-        filter.setValue(CIVector(x: 0.0, y: 0.0), forKey: "inputPoint0")
-        filter.setValue(CIVector(x: 0.25, y: 0.1), forKey: "inputPoint1")
-        filter.setValue(CIVector(x: 0.5, y: 0.5), forKey: "inputPoint2")
-        filter.setValue(CIVector(x: 0.75, y: 0.9), forKey: "inputPoint3")
-        filter.setValue(CIVector(x: 1.0, y: 1.0), forKey: "inputPoint4")
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        return UIImage(CGImage: cgImage)
-        
-    }
-    
-    
-    var colorFilterchilt : CIFilter!
-    func colorFilterchilt(originalImage : UIImage!) -> UIImage! {
-        blendWithMask()
-        let filterImage : CIImage = CIImage(image: originalImage)!
-        filter = CIFilter(name:"CIGaussianBlur")!
-        print(0)
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-        print(1)
-        filter.setValue(70, forKey: kCIInputRadiusKey)
-        print(2)
-        
-        let cropFilter = CIFilter(name: "CICrop")
-        cropFilter!.setValue(filter.outputImage, forKey: kCIInputImageKey)
-        print(3)
-        cropFilter!.setValue(CIVector(CGRect: filterImage.extent), forKey:"inputRectangle")
-        print(4)
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        return UIImage(CGImage: cgImage)
-        
-    }
     
     
     
-    func blurred(originalImage : UIImage!) -> UIImage! {
-        var blurred : CIFilter! = nil
-        let filterImage  = CIImage(image: originalImage)!
-        filter = CIFilter(name:"CIGaussianBlur")!
-        print(0)
-        filter.setValue(filterImage, forKey: kCIInputImageKey)
-        print(1)
-        filter.setValue(70, forKey: kCIInputRadiusKey)
-        print(2)
-        
-        let cropFilter = CIFilter(name: "CICrop")
-        cropFilter!.setValue(filter.outputImage, forKey: kCIInputImageKey)
-        print(3)
-        cropFilter!.setValue(CIVector(CGRect: filterImage.extent), forKey:"inputRectangle")
-        print(4)
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter!.outputImage!, fromRect: filter.outputImage!.extent)
-        return UIImage(CGImage: cgImage)
-        
-        
-        
-        
-        func topLinearGradient() -> CIImage {
-            let ciImage = CIImage(image: originalImage)
-            let filter = CIFilter(name: "CILinearGradient")
-            filter!.setValue(CIVector(x: 0, y: 0.75 * ciImage!.extent.height), forKey: "inputPoint0")
-            filter!.setValue(CIColor(red: 0, green: 1, blue: 0, alpha: 0.9), forKey: "inputColor0")
-            filter!.setValue(CIVector(x: 0, y: 0.5 * ciImage!.extent.height), forKey: "inputPoint1")
-            filter!.setValue(CIColor(red: 0, green: 1, blue: 0, alpha: 0), forKey: "inputColor1")
-            
-            let cropFilter = CIFilter(name: "CICrop")
-            cropFilter!.setValue(filter!.outputImage, forKey: kCIInputImageKey)
-            cropFilter!.setValue(CIVector(CGRect: ciImage!.extent), forKey: "inputRectangle")
-            
-            return cropFilter!.outputImage!
-            
-            
-        }
-        
-        func bottomLinearGradient() -> CIImage {
-            let ciImage = CIImage(image: originalImage)
-            let filter = CIFilter(name: "CILinearGradient")
-            filter!.setValue(CIVector(x: 0, y: 0.25 * ciImage!.extent.height), forKey: "inputPoint0")
-            filter!.setValue(CIColor(red: 0, green: 1, blue: 0, alpha: 0.9), forKey: "inputColor0")
-            filter!.setValue(CIVector(x: 0, y: 0.5 * ciImage!.extent.height), forKey: "inputPoint1")
-            filter!.setValue(CIColor(red: 0, green: 1, blue: 0, alpha: 0), forKey: "inputColor1")
-            
-            let cropFilter = CIFilter(name: "CICrop")
-            cropFilter!.setValue(filter!.outputImage, forKey: kCIInputImageKey)
-            cropFilter!.setValue(CIVector(CGRect: ciImage!.extent), forKey: "inputRectangle")
-            
-            return cropFilter!.outputImage!
-        }
-        
-        func additionCompositing() -> CIImage {
-            let context = CIContext(options: nil)
-            let filter = CIFilter(name: "CIAdditionCompositing")
-            filter!.setValue(topLinearGradient(), forKey: kCIInputImageKey)
-            filter!.setValue(bottomLinearGradient(), forKey: kCIInputBackgroundImageKey)
-            return filter!.outputImage!
-        }
-        
-        func blendWithMask() {
-            let context = CIContext(options: nil)
-            let ciImage = CIImage(image: originalImage
-            )
-            let filter = CIFilter(name: "CIBlendWithMask")
-            filter!.setValue(blurred, forKey: kCIInputImageKey)
-            filter!.setValue(ciImage, forKey: kCIInputBackgroundImageKey)
-            filter!.setValue(additionCompositing(), forKey: kCIInputMaskImageKey)
-            
-            let extent = filter!.outputImage!.extent
-            let cgImage: CGImage = context.createCGImage(filter!.outputImage!, fromRect: extent)
-            
-        }
-        
-    }
-
 }
 
