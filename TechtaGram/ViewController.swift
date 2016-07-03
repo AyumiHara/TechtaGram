@@ -12,7 +12,7 @@ import AssetsLibrary
 
 import Accounts
 
-class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINavigationControllerDelegate,UICollectionViewDataSource {
+class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerControllerDelegate,  UINavigationControllerDelegate,UICollectionViewDataSource {
     
     @IBOutlet var cameraImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -27,14 +27,17 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        collectionView.delegate = self
         
-        // Do any additional setup after loading the view, typically from a nib.
+
+    }
+    
+    
+    func imageTapped(sender: UITapGestureRecognizer) {
+        print("@@@@@@@")
     }
     
     @IBAction func selected(sender: AnyObject) {
-        
-        
         var imagePikerContoroller: UIImagePickerController = UIImagePickerController()
         imagePikerContoroller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         imagePikerContoroller.allowsEditing = true
@@ -44,20 +47,15 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
     
     func show(){
         
-    filerUtil = FilterUtil()
-    let nib:UINib = UINib(nibName: "CustomCollectionViewCell",bundle: nil)
-    
-    let layout = UICollectionViewFlowLayout()
-    
-    //originalImage = UIImage(named: "96.png")
-    
-    
-    // Cell一つ一つの大きさ.
-    layout.itemSize = CGSizeMake(200, 200)
-    collectionView.registerNib(nib, forCellWithReuseIdentifier: "Cell")
-    collectionView.dataSource = self
-
+        filerUtil = FilterUtil()
+        let nib:UINib = UINib(nibName: "CustomCollectionViewCell",bundle: nil)
+        collectionView.registerNib(nib, forCellWithReuseIdentifier: "Cell")
+        collectionView.dataSource = self
+        
     }
+    
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -67,18 +65,26 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CustomCollectionViewCell
         
-        
-        
-        
         cell.ImageView.image = setImage(indexPath.row).1
+        print(cell.ImageView.tag)
+        
+        
+        
         
         cell.label.text = setImage(indexPath.row).0
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print(indexPath.row)
+        collectionView.
+        
+        
+    }
+    
     func  setImage(indexPath : Int) -> (String,UIImage){
         
-       
+        
         
         switch indexPath {
         case 0:
@@ -93,21 +99,12 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,  UINav
             return("フィルター１",filerUtil.colorFilter(originalImage))
         default:
             return("フィルター２",filerUtil.colorFilter2(originalImage))
-//        case 5:
-//            return("プロセス",filerUtil.CIPhotoEffectProcess(originalImage))
-//        default:
-//            return("クローム",filerUtil.CIPhotoEffectChrome(originalImage))
+            //        case 5:
+            //            return("プロセス",filerUtil.CIPhotoEffectProcess(originalImage))
+            //        default:
+            //            return("クローム",filerUtil.CIPhotoEffectChrome(originalImage))
             
         }
-           }
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        // 条件に従ってサイズを変更する。
-        
-        var size = CGSize(width: 100, height: 300) // Square
-            
-        
-        return size
     }
     
     // セル数を返す(UITableViewでいうところの"tableView:numberOfRowsInSection:"
