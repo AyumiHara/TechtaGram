@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        let storyboard: UIStoryboard = StoryboardHelper.adjust()
+        window!.rootViewController = storyboard.instantiateInitialViewController()! as UIViewController
+        self.window?.makeKeyAndVisible()
         // Override point for customization after application launch.
         return true
     }
@@ -40,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    
 
 
 }

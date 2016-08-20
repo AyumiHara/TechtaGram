@@ -22,6 +22,16 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     var filter : CIFilter!
     var filerUtil : FilterUtil!
     
+    var curveImageView : UIImage! = nil
+    var grayImageView : UIImage! = nil
+    var sepiaImageView : UIImage! = nil
+    var filter1ImageView : UIImage! = nil
+    var filter2ImageView : UIImage! = nil
+    var filterfadeImageView : UIImage! = nil
+    var filterniseImageView : UIImage! = nil
+    var filterhanImageView : UIImage! = nil
+  
+    
     
     //var assetCollection: PHAssetCollection!
     
@@ -29,7 +39,8 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
         super.viewDidLoad()
         collectionView.delegate = self
         
-
+        
+        
     }
     
     
@@ -38,7 +49,17 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     }
     
     @IBAction func selected(sender: AnyObject) {
-        var imagePikerContoroller: UIImagePickerController = UIImagePickerController()
+        curveImageView  = nil
+        grayImageView  = nil
+        sepiaImageView = nil
+        filter1ImageView = nil
+        filter2ImageView = nil
+        filterfadeImageView = nil
+        filterniseImageView = nil
+        filterhanImageView = nil
+       
+        
+        let imagePikerContoroller: UIImagePickerController = UIImagePickerController()
         imagePikerContoroller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         imagePikerContoroller.allowsEditing = true
         self.presentViewController(imagePikerContoroller, animated: true, completion: nil)
@@ -51,6 +72,7 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
         let nib:UINib = UINib(nibName: "CustomCollectionViewCell",bundle: nil)
         collectionView.registerNib(nib, forCellWithReuseIdentifier: "Cell")
         collectionView.dataSource = self
+        collectionView.reloadData()
         
     }
     
@@ -64,7 +86,8 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CustomCollectionViewCell
-        
+        cell.ImageView.layer.cornerRadius = 20
+        cell.ImageView.layer.masksToBounds = true
         cell.ImageView.image = setImage(indexPath.row).1
         print(cell.ImageView.tag)
         
@@ -89,17 +112,70 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
         
         switch indexPath {
         case 0:
+            
+            if curveImageView == nil{
+                curveImageView = filerUtil.colorFiltercurve(originalImage)
+            }
             //セピアの結果を返す
-            return ("セピア",filerUtil.colorFiltersepia(CIImage(image:originalImage)))
+            return("カーブ",curveImageView)
         case 1:
+            
+            if grayImageView == nil{
+                grayImageView = filerUtil.colorFiltergrey(originalImage)
+            }
             //グレイの結果を返す
-            return("グレイ",filerUtil.colorFiltergray(originalImage))
+            return("グレイ",grayImageView)
         case 2:
-            return("カーブ",filerUtil.colorFiltercurve(originalImage))
+            
+            if sepiaImageView  == nil{
+                sepiaImageView = filerUtil.colorFiltersepia(CIImage(image:originalImage))
+            }
+            return ("セピア",sepiaImageView)
         case 3:
-            return("フィルター１",filerUtil.colorFilter(originalImage))
+            
+            if filter1ImageView == nil{
+                filter1ImageView = filerUtil.colorFilter(originalImage)
+            }
+            return("フィルター１",filter1ImageView)
+            
+        case 4:
+            if filterfadeImageView == nil{
+                filterfadeImageView = filerUtil.CIPhotoEffectFade(originalImage)
+            }
+            return("フェード",filterfadeImageView)
+            
+        case 5:
+            if filterniseImageView == nil{
+                filterniseImageView = filerUtil.colorFilternise(CIImage(image:originalImage))
+            }
+            return("偽色",filterfadeImageView)
+            
+        case 6:
+            if filterniseImageView == nil{
+                filterniseImageView = filerUtil.colorFilternise(CIImage(image:originalImage))
+            }
+            return("反転",filterfadeImageView)
+            
+        case 6:
+            if filterniseImageView == nil{
+                filterniseImageView = filerUtil.colorFilternise(CIImage(image:originalImage))
+            }
+            return("インスタント",filterfadeImageView)
+    
+            
+            
+            
+            
+            
+            
         default:
-            return("フィルター２",filerUtil.colorFilter2(originalImage))
+            
+            if filter2ImageView == nil{
+                filter2ImageView = filerUtil.colorFilter2(originalImage)
+            }
+            return("フィルター２",filter2ImageView)
+            
+            
             //        case 5:
             //            return("プロセス",filerUtil.CIPhotoEffectProcess(originalImage))
             //        default:
@@ -110,7 +186,7 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     
     // セル数を返す(UITableViewでいうところの"tableView:numberOfRowsInSection:"
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5;
+        return 10
     }
     
     override func viewWillLayoutSubviews() {
@@ -121,6 +197,16 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     @IBAction func takePhoto() {
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+            
+            curveImageView  = nil
+            grayImageView  = nil
+            sepiaImageView = nil
+            filter1ImageView = nil
+            filter2ImageView = nil
+            filterfadeImageView = nil
+            filterniseImageView = nil
+            filterhanImageView = nil
+            
             
             let picker = UIImagePickerController()
             picker.sourceType = UIImagePickerControllerSourceType.Camera
@@ -136,26 +222,40 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     }
     
     @IBAction func savePhoto(){
-        //        UIImageWriteToSavedPhotosAlbum(cgimg, self, "image:didFinishSavingWithError:contextInfo:", nil)
         
-        
-        let imageToSave = filter.outputImage!
-        let softwareContext = CIContext(options: [kCIContextUseSoftwareRenderer: true])
-        let cgimg = softwareContext.createCGImage(imageToSave, fromRect: imageToSave.extent)
-        let library = ALAssetsLibrary()
-        library.writeImageToSavedPhotosAlbum(cgimg, metadata: imageToSave.properties, completionBlock: nil)
-        
-        
-        //PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-        //let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(UIImage(CGImage: cgimg))
-        //let assetPlaceHolder = assetChangeRequest.placeholderForCreatedAsset
-        //let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection)
-        //albumChangeRequest!.addAssets([assetPlaceHolder!])
-        //}, completionHandler: nil)
-        
-        
-        
+        if cameraImageView.image != nil{
+            
+            print(cameraImageView.image?.size)
+            //  UIImageWriteToSavedPhotosAlbum(cgimg, self, "image:didFinishSavingWithError:contextInfo:", nil)
+            UIImageWriteToSavedPhotosAlbum(cameraImageView.image!, self, #selector(ViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+            
+            let alertController = UIAlertController(title: "保存完了！", message: "カメラロールに画像を保存しました",preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+            
+            
+            
+            //PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+            //let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(UIImage(CGImage: cgimg))
+            //let assetPlaceHolder = assetChangeRequest.placeholderForCreatedAsset
+            //let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection)
+            //albumChangeRequest!.addAssets([assetPlaceHolder!])
+            //}, completionHandler: nil)
+            
+            
+        }
     }
+    
+    func image(image: UIImage, didFinishSavingWithError error: NSError!, contextInfo: UnsafeMutablePointer<Void>) {
+        if error != nil {
+            /* 失敗 */
+            print(error.code)
+        }
+    }
+    
     
     
     
@@ -169,7 +269,7 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     }
     
     @IBAction func colorFiltergray(){
-        cameraImageView.image = filerUtil.colorFiltergray(originalImage)
+        cameraImageView.image = filerUtil.colorFiltergrey(originalImage)
         
     }
     
@@ -185,6 +285,8 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
         
     }
     
+    
+    
     @IBAction func CIPhotoEffectProcess(){
         
         filter = CIFilter(name: "CIPhotoEffectProcess")
@@ -196,6 +298,25 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
         filter = CIFilter(name: "CIPhotoEffectChrome")
         outputImage()
     }
+    
+    @IBAction func photoEffectFade() {
+        filter = CIFilter(name: "CIPhotoEffectFade")
+        outputImage()
+    }
+    
+    @IBAction func colorFilternise(){
+        cameraImageView.image = filerUtil.colorFilternise(originalImage.CIImage)
+        
+              
+        
+    }
+    
+    @IBAction func colorFilterhan(){
+      filter = CIFilter(name: "CIColorMonochrome")
+        outputImage()
+    }
+    
+    
     
     
     func outputImage() {
@@ -235,20 +356,25 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     }
     
     @IBAction func snsPost(){
-        let shareText = "写真を加工したよ！！"
-        let shareImage = cameraImageView.image!
-        let activityItems = [shareText,shareImage]
-        
-        let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-        
-        let excludedActivityTypes = [
-            UIActivityTypePostToWeibo,
-            UIActivityTypeSaveToCameraRoll,
-            UIActivityTypePrint,
-            ]
-        activityVC.excludedActivityTypes = excludedActivityTypes
-        
-        self.presentViewController(activityVC, animated: true, completion: nil)
+        if cameraImageView.image != nil{
+            
+            
+            let shareText = "写真を加工したよ！！"
+            let shareImage = cameraImageView.image!
+            let activityItems = [shareText,shareImage]
+            
+            let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+            
+            let excludedActivityTypes = [
+                UIActivityTypePostToWeibo,
+                UIActivityTypeSaveToCameraRoll,
+                UIActivityTypePrint,
+                ]
+            activityVC.excludedActivityTypes = excludedActivityTypes
+            
+            self.presentViewController(activityVC, animated: true, completion: nil)
+            
+        }
         
         
     }
@@ -268,14 +394,6 @@ class ViewController: UIViewController ,UICollectionViewDelegate,UIImagePickerCo
     //        alert.show()
     //    }
     
-    @IBAction func alertBtn(sender: UIButton) {
-        let alertController = UIAlertController(title: "保存完了！", message: "カメラロールに画像を保存しました",preferredStyle: .Alert)
-        
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        
-        presentViewController(alertController, animated: true, completion: nil)
-    }
     
     
     

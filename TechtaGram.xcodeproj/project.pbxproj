@@ -14,10 +14,17 @@
 		1E2F04251CAF9FD7005D7F18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E2F04231CAF9FD7005D7F18 /* LaunchScreen.storyboard */; };
 		1E2F04301CAF9FD7005D7F18 /* TechtaGramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F042F1CAF9FD7005D7F18 /* TechtaGramTests.swift */; };
 		1E2F043B1CAF9FD7005D7F18 /* TechtaGramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F043A1CAF9FD7005D7F18 /* TechtaGramUITests.swift */; };
+		1E7DB8AF1D3B4C5900E811CB /* kiloji.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E7DB8AE1D3B4C4400E811CB /* kiloji.ttf */; };
+		1E7DB8B11D3B552800E811CB /* setofont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E7DB8B01D3B551D00E811CB /* setofont.ttf */; };
 		1EA3280A1D166A1200C4BA85 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA328081D166A1200C4BA85 /* CustomCollectionViewCell.swift */; };
 		1EA3280B1D166A1200C4BA85 /* CustomCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EA328091D166A1200C4BA85 /* CustomCollectionViewCell.xib */; };
 		1EA3280D1D166D4900C4BA85 /* 96.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EA3280C1D166D4900C4BA85 /* 96.png */; };
 		1EF12A1C1CDF231D002EDB4A /* FilterUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF12A1B1CDF231D002EDB4A /* FilterUtil.swift */; };
+		1EF9C4341D655B1000E637AE /* 3.5inch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EF9C4331D655B1000E637AE /* 3.5inch.storyboard */; };
+		1EF9C43A1D65616C00E637AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EF9C4361D65616C00E637AE /* Default-568h@2x.png */; };
+		1EF9C43B1D65616C00E637AE /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EF9C4371D65616C00E637AE /* Default-667h@2x.png */; };
+		1EF9C43C1D65616C00E637AE /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EF9C4381D65616C00E637AE /* Default-736h@3x.png */; };
+		1EF9C43D1D65616C00E637AE /* StoryboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF9C4391D65616C00E637AE /* StoryboardHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,10 +58,17 @@
 		1E2F04361CAF9FD7005D7F18 /* TechtaGramUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TechtaGramUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E2F043A1CAF9FD7005D7F18 /* TechtaGramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechtaGramUITests.swift; sourceTree = "<group>"; };
 		1E2F043C1CAF9FD7005D7F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E7DB8AE1D3B4C4400E811CB /* kiloji.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kiloji.ttf; sourceTree = "<group>"; };
+		1E7DB8B01D3B551D00E811CB /* setofont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = setofont.ttf; path = "../../../Downloads/setofont-2/setofont.ttf"; sourceTree = "<group>"; };
 		1EA328081D166A1200C4BA85 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		1EA328091D166A1200C4BA85 /* CustomCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCollectionViewCell.xib; sourceTree = "<group>"; };
 		1EA3280C1D166D4900C4BA85 /* 96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 96.png; sourceTree = "<group>"; };
 		1EF12A1B1CDF231D002EDB4A /* FilterUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterUtil.swift; sourceTree = "<group>"; };
+		1EF9C4331D655B1000E637AE /* 3.5inch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = 3.5inch.storyboard; path = ../3.5inch.storyboard; sourceTree = "<group>"; };
+		1EF9C4361D65616C00E637AE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		1EF9C4371D65616C00E637AE /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
+		1EF9C4381D65616C00E637AE /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
+		1EF9C4391D65616C00E637AE /* StoryboardHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,10 +120,13 @@
 		1E2F04191CAF9FD7005D7F18 /* TechtaGram */ = {
 			isa = PBXGroup;
 			children = (
+				1E7DB8B01D3B551D00E811CB /* setofont.ttf */,
+				1E7DB8AE1D3B4C4400E811CB /* kiloji.ttf */,
 				1EA3280C1D166D4900C4BA85 /* 96.png */,
 				1E2F041A1CAF9FD7005D7F18 /* AppDelegate.swift */,
 				1E2F041C1CAF9FD7005D7F18 /* ViewController.swift */,
 				1E2F041E1CAF9FD7005D7F18 /* Main.storyboard */,
+				1EF9C4331D655B1000E637AE /* 3.5inch.storyboard */,
 				1E2F04211CAF9FD7005D7F18 /* Assets.xcassets */,
 				1E2F04231CAF9FD7005D7F18 /* LaunchScreen.storyboard */,
 				1E2F04261CAF9FD7005D7F18 /* Info.plist */,
@@ -140,9 +157,21 @@
 		1EF12A1A1CDF230B002EDB4A /* Filter */ = {
 			isa = PBXGroup;
 			children = (
+				1EF9C4351D65616C00E637AE /* Defaults */,
+				1EF9C4391D65616C00E637AE /* StoryboardHelper.swift */,
 				1EF12A1B1CDF231D002EDB4A /* FilterUtil.swift */,
 			);
 			name = Filter;
+			sourceTree = "<group>";
+		};
+		1EF9C4351D65616C00E637AE /* Defaults */ = {
+			isa = PBXGroup;
+			children = (
+				1EF9C4361D65616C00E637AE /* Default-568h@2x.png */,
+				1EF9C4371D65616C00E637AE /* Default-667h@2x.png */,
+				1EF9C4381D65616C00E637AE /* Default-736h@3x.png */,
+			);
+			path = Defaults;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,11 +281,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E7DB8B11D3B552800E811CB /* setofont.ttf in Resources */,
+				1E7DB8AF1D3B4C5900E811CB /* kiloji.ttf in Resources */,
+				1EF9C43A1D65616C00E637AE /* Default-568h@2x.png in Resources */,
+				1EF9C43C1D65616C00E637AE /* Default-736h@3x.png in Resources */,
 				1EA3280D1D166D4900C4BA85 /* 96.png in Resources */,
 				1E2F04251CAF9FD7005D7F18 /* LaunchScreen.storyboard in Resources */,
 				1E2F04221CAF9FD7005D7F18 /* Assets.xcassets in Resources */,
 				1E2F04201CAF9FD7005D7F18 /* Main.storyboard in Resources */,
+				1EF9C4341D655B1000E637AE /* 3.5inch.storyboard in Resources */,
 				1EA3280B1D166A1200C4BA85 /* CustomCollectionViewCell.xib in Resources */,
+				1EF9C43B1D65616C00E637AE /* Default-667h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +319,7 @@
 				1E2F041D1CAF9FD7005D7F18 /* ViewController.swift in Sources */,
 				1EF12A1C1CDF231D002EDB4A /* FilterUtil.swift in Sources */,
 				1E2F041B1CAF9FD7005D7F18 /* AppDelegate.swift in Sources */,
+				1EF9C43D1D65616C00E637AE /* StoryboardHelper.swift in Sources */,
 				1EA3280A1D166A1200C4BA85 /* CustomCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,6 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TechtaGram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.harachan.TechtaGram;
@@ -435,6 +472,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TechtaGram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.harachan.TechtaGram;

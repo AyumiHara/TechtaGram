@@ -15,7 +15,7 @@ class FilterUtil {
     var filter : CIFilter!
     var filerUtil : FilterUtil!
     
-    var filtergray : CIFilter!
+    var filtergrey : CIFilter!
     
     func colorFilter(originalImage : UIImage!) -> UIImage! {
         
@@ -72,9 +72,9 @@ class FilterUtil {
         
     }
     
-    var colorFiltergray : CIFilter!
+    var colorFiltergrey : CIFilter!
     
-    func colorFiltergray(originalImage : UIImage!) -> UIImage! {
+    func colorFiltergrey(originalImage : UIImage!) -> UIImage! {
         
         let filterImage : CIImage = CIImage(image: originalImage)!
         
@@ -128,6 +128,46 @@ class FilterUtil {
         return UIImage(CGImage: cgImage)
         
     }
+    
+    var colorFilternise : CIFilter!
+    func colorFilternise(originalImage : CIImage!) -> UIImage! {
+        
+/*filter = CIFilter(name: "CIPhotoEffectFade")
+ let inputImage = CIImage(image: originalImage)
+ filter.setValue(inputImage, forKey: kCIInputImageKey)
+ let ctx = CIContext(options: nil)
+ let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
+ return UIImage(CGImage: cgImage)*/
+        
+ 
+        /* let ciImage:CIImage = originalImage
+        let ciFilter:CIFilter = CIFilter(name: "CIFalseColor" )!
+        ciFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        ciFilter.setValue(CIColor(red: 0.44, green: 0.5, blue: 0.2), forKey: "inputColor0")
+        ciFilter.setValue(CIColor(red: 1, green: 0.92, blue: 0.50), forKey: "inputColor1")
+        
+        let ctx = CIContext(options: nil)
+        let cgImage = ctx.createCGImage(ciFilter.outputImage!, fromRect: ciFilter.outputImage!.extent)
+        return UIImage(CGImage: cgImage)
+        
+
+        //let cgimg:CGImageRef = ciContext.createCGImage(ciFilter.outputImage!, fromRect:ciFilter.outputImage!.extent)
+       // return UIImage(CGImage: cgimg, scale: 1.0, orientation:UIImageOrientation.Up)*/
+        
+        let ciImage:CIImage = originalImage
+        let ciFilter:CIFilter = CIFilter(name: "CIFalseColor")!
+        ciFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        ciFilter.setValue(CIColor(red: 0.44, green: 0.5, blue: 0.2), forKey: "inputColor0")
+        ciFilter.setValue(CIColor(red: 1, green: 0.92, blue: 0.50), forKey: "inputColor1")
+        
+        let ciContext:CIContext = CIContext(options: nil)
+        let cgimg:CGImageRef = ciContext.createCGImage(ciFilter.outputImage!, fromRect:ciFilter.outputImage!.extent)
+        
+        //image2に加工後のUIImage
+        let image2:UIImage? = UIImage(CGImage: cgimg, scale: 1.0, orientation:UIImageOrientation.Up)
+         return image2
+    }
+
     
     
     
@@ -202,12 +242,14 @@ class FilterUtil {
     
     var CIPhotoEffectProcess : CIFilter!
     func CIPhotoEffectProcess(originalImage : UIImage!) -> UIImage! {
-        
         filter = CIFilter(name: "CIPhotoEffectProcess")
+        let inputImage = CIImage(image: originalImage)
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
         let ctx = CIContext(options: nil)
         let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
         
-        return UIImage(CGImage: cgImage)
+             return UIImage(CGImage: cgImage)
+
         
         
     }
@@ -216,6 +258,8 @@ class FilterUtil {
     func CIPhotoEffectChrome(originalImage : UIImage!) -> UIImage! {
         
         filter = CIFilter(name: "CIPhotoEffectChrome")
+        let inputImage = CIImage(image: originalImage)
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
         let ctx = CIContext(options: nil)
         let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
         
@@ -223,16 +267,53 @@ class FilterUtil {
         
         
     }
+        var CIPhotoEffectFade : CIFilter!
+    func CIPhotoEffectFade(originalImage : UIImage!) -> UIImage! {
+        filter = CIFilter(name: "CIPhotoEffectFade")
+        let inputImage = CIImage(image: originalImage)
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        let ctx = CIContext(options: nil)
+        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
+        return UIImage(CGImage: cgImage)
+        
+    }
+    
+    var colorFilterhan : CIFilter!
+    func colorFilterhan(originalImage : CIImage!) -> UIImage! {
+        
+        let ciImage:CIImage = originalImage
+        let ciFilter:CIFilter = CIFilter(name: "CIColorMonochrome")!
+        ciFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        ciFilter.setValue(CIColor(red: 0.75, green: 0.75, blue: 0.75), forKey: "inputColor")
+        ciFilter.setValue(1.0, forKey: "inputIntensity")
+        let ciContext:CIContext = CIContext(options: nil)
+        let cgimg:CGImageRef = ciContext.createCGImage(ciFilter.outputImage!, fromRect:ciFilter.outputImage!.extent)
+        return UIImage(CGImage: cgimg, scale: 1.0, orientation:UIImageOrientation.Up)
+    }
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
     
     var outputImage : CIFilter!
     func outputImage(originalImage : UIImage!) -> UIImage! {
         print(filter)
         let inputImage = CIImage(image: originalImage)
         filter.setValue(inputImage, forKey: kCIInputImageKey)
+    
         let ctx = CIContext(options: nil)
         let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
         return UIImage(CGImage: cgImage)
     }
+    
+    
     
     
 }
