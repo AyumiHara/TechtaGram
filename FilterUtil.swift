@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class FilterUtil {
+internal class FilterUtil {
     
     var originalImage : UIImage!
     var filter : CIFilter!
@@ -28,9 +28,13 @@ class FilterUtil {
         filter.setValue(2.0, forKey: "inputContrast")
         
         let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
         
-        return UIImage(CGImage: cgImage)
+        
+        
+        
+        
+        return UIImage(cgImage: cgImage!)
         
     }
     var filter2 : CIFilter!
@@ -46,9 +50,9 @@ class FilterUtil {
         filter.setValue(3.0, forKey: "inputContrast")
         
         let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
         
-        return UIImage(CGImage: cgImage)
+        return UIImage(cgImage: cgImage!)
         
     }
     
@@ -67,8 +71,8 @@ class FilterUtil {
         filter.setValue(CIVector(x: 1.0, y: 1.0), forKey: "inputPoint4")
         
         let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        return UIImage(CGImage: cgImage)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
+        return UIImage(cgImage: cgImage!)
         
     }
     
@@ -84,9 +88,9 @@ class FilterUtil {
         filter.setValue(1.0, forKey: "inputIntensity")
         
         let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
         
-        return UIImage(CGImage: cgImage)
+        return UIImage(cgImage: cgImage!)
         
         
     }
@@ -100,8 +104,8 @@ class FilterUtil {
         ciFilter.setValue(ciImage, forKey: kCIInputImageKey)
         ciFilter.setValue(0.8, forKey: "inputIntensity")
         let ciContext:CIContext = CIContext(options: nil)
-        let cgimg:CGImageRef = ciContext.createCGImage(ciFilter.outputImage!, fromRect:ciFilter.outputImage!.extent)
-        return UIImage(CGImage: cgimg, scale: 1.0, orientation:UIImageOrientation.Up)
+        let cgimg:CGImage = ciContext.createCGImage(ciFilter.outputImage!, from:ciFilter.outputImage!.extent)!
+        return UIImage(cgImage: cgimg, scale: 1.0, orientation:UIImageOrientation.up)
     }
     
     
@@ -120,39 +124,18 @@ class FilterUtil {
         let cropFilter = CIFilter(name: "CICrop")
         cropFilter!.setValue(filter.outputImage, forKey: kCIInputImageKey)
         print(3)
-        cropFilter!.setValue(CIVector(CGRect: filterImage.extent), forKey:"inputRectangle")
+        cropFilter!.setValue(CIVector(cgRect: filterImage.extent), forKey:"inputRectangle")
         print(4)
         
         let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        return UIImage(CGImage: cgImage)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
+        return UIImage(cgImage: cgImage!)
         
     }
     
     var colorFilternise : CIFilter!
     func colorFilternise(originalImage : CIImage!) -> UIImage! {
         
-/*filter = CIFilter(name: "CIPhotoEffectFade")
- let inputImage = CIImage(image: originalImage)
- filter.setValue(inputImage, forKey: kCIInputImageKey)
- let ctx = CIContext(options: nil)
- let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
- return UIImage(CGImage: cgImage)*/
-        
- 
-        /* let ciImage:CIImage = originalImage
-        let ciFilter:CIFilter = CIFilter(name: "CIFalseColor" )!
-        ciFilter.setValue(ciImage, forKey: kCIInputImageKey)
-        ciFilter.setValue(CIColor(red: 0.44, green: 0.5, blue: 0.2), forKey: "inputColor0")
-        ciFilter.setValue(CIColor(red: 1, green: 0.92, blue: 0.50), forKey: "inputColor1")
-        
-        let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(ciFilter.outputImage!, fromRect: ciFilter.outputImage!.extent)
-        return UIImage(CGImage: cgImage)
-        
-
-        //let cgimg:CGImageRef = ciContext.createCGImage(ciFilter.outputImage!, fromRect:ciFilter.outputImage!.extent)
-       // return UIImage(CGImage: cgimg, scale: 1.0, orientation:UIImageOrientation.Up)*/
         
         let ciImage:CIImage = originalImage
         let ciFilter:CIFilter = CIFilter(name: "CIFalseColor")!
@@ -161,13 +144,13 @@ class FilterUtil {
         ciFilter.setValue(CIColor(red: 1, green: 0.92, blue: 0.50), forKey: "inputColor1")
         
         let ciContext:CIContext = CIContext(options: nil)
-        let cgimg:CGImageRef = ciContext.createCGImage(ciFilter.outputImage!, fromRect:ciFilter.outputImage!.extent)
+        let cgimg:CGImage = ciContext.createCGImage(ciFilter.outputImage!, from:ciFilter.outputImage!.extent)!
         
         //image2に加工後のUIImage
-        let image2:UIImage? = UIImage(CGImage: cgimg, scale: 1.0, orientation:UIImageOrientation.Up)
-         return image2
+        let image2:UIImage? = UIImage(cgImage: cgimg, scale: 1.0, orientation:UIImageOrientation.up)
+        return image2
     }
-
+    
     
     
     
@@ -246,10 +229,10 @@ class FilterUtil {
         let inputImage = CIImage(image: originalImage)
         filter.setValue(inputImage, forKey: kCIInputImageKey)
         let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
         
-             return UIImage(CGImage: cgImage)
-
+        return UIImage(cgImage: cgImage!)
+        
         
         
     }
@@ -261,44 +244,83 @@ class FilterUtil {
         let inputImage = CIImage(image: originalImage)
         filter.setValue(inputImage, forKey: kCIInputImageKey)
         let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
         
-        return UIImage(CGImage: cgImage)
+        return UIImage(cgImage: cgImage!)
         
         
     }
-        var CIPhotoEffectFade : CIFilter!
+    var CIPhotoEffectFade : CIFilter!
     func CIPhotoEffectFade(originalImage : UIImage!) -> UIImage! {
         filter = CIFilter(name: "CIPhotoEffectFade")
         let inputImage = CIImage(image: originalImage)
         filter.setValue(inputImage, forKey: kCIInputImageKey)
         let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        return UIImage(CGImage: cgImage)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
+        return UIImage(cgImage: cgImage!)
         
     }
     
+    
+    /* 色の反転 */
     var colorFilterhan : CIFilter!
     func colorFilterhan(originalImage : CIImage!) -> UIImage! {
         
         let ciImage:CIImage = originalImage
-        let ciFilter:CIFilter = CIFilter(name: "CIColorMonochrome")!
+        let ciFilter:CIFilter = CIFilter(name: "CIColorInvert")!
+        
+        
+        /*
+         CIFilter *ciFilter = [CIFilter filterWithName:@"CIColorInvert"];
+         [ciFilter setValue:ciImage forKey:kCIInputImageKey];
+         
+         CIContext *ciContext = [CIContext contextWithOptions:nil];
+         CGImageRef cgImageRef = [ciContext createCGImage:[ciFilter outputImage] fromRect:[[ciFilter outputImage] extent]];
+         UIImage *filteringImage = [UIImage imageWithCGImage:cgImageRef scale:1.0f orientation:UIImageOrientationUp];
+         CGImageRelease(cgImageRef);
+         */
         ciFilter.setValue(ciImage, forKey: kCIInputImageKey)
-        ciFilter.setValue(CIColor(red: 0.75, green: 0.75, blue: 0.75), forKey: "inputColor")
-        ciFilter.setValue(1.0, forKey: "inputIntensity")
         let ciContext:CIContext = CIContext(options: nil)
-        let cgimg:CGImageRef = ciContext.createCGImage(ciFilter.outputImage!, fromRect:ciFilter.outputImage!.extent)
-        return UIImage(CGImage: cgimg, scale: 1.0, orientation:UIImageOrientation.Up)
+        let cgimg:CGImage = ciContext.createCGImage(ciFilter.outputImage!, from:ciFilter.outputImage!.extent)!
+        return UIImage(cgImage: cgimg, scale: 1.0, orientation:UIImageOrientation.up)
     }
     
-
+    var CIPhotoEffectInstant : CIFilter!
+    func CIPhotoEffectInstant(originalImage : UIImage!) -> UIImage! {
+        filter = CIFilter(name: "CIPhotoEffectInstant")
+        let inputImage = CIImage(image: originalImage)
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        let ctx = CIContext(options: nil)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
+        return UIImage(cgImage: cgImage!)
+        
+    }
+    var CIGaussianBlur : CIFilter!
+    func CIGaussianBlur(originalImage : UIImage!) -> UIImage! {
+        filter = CIFilter(name: "CIGaussianBlur")
+        let inputImage = CIImage(image: originalImage)
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        let ctx = CIContext(options: nil)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
+        return UIImage(cgImage: cgImage!)
+        
+    }
+    
+    func blur(orgImage: UIImage, radius: CGFloat) -> UIImage {
+        let filteredImage = CIImage(cgImage: orgImage.cgImage!)
+        let blurFilter = CIFilter(name: "CIGaussianBlur")
+        blurFilter!.setDefaults()
+        blurFilter!.setValue(filteredImage, forKey: kCIInputImageKey)
+        blurFilter!.setValue(radius, forKey: "InputRadius")
+        return UIImage(ciImage: blurFilter!.outputImage!)
+    }
     
     
     
     
     
     
-
+    
     
     
     
@@ -307,13 +329,10 @@ class FilterUtil {
         print(filter)
         let inputImage = CIImage(image: originalImage)
         filter.setValue(inputImage, forKey: kCIInputImageKey)
-    
+        
         let ctx = CIContext(options: nil)
-        let cgImage = ctx.createCGImage(filter.outputImage!, fromRect: filter.outputImage!.extent)
-        return UIImage(CGImage: cgImage)
+        let cgImage = ctx.createCGImage(filter.outputImage!, from: filter.outputImage!.extent)
+        return UIImage(cgImage: cgImage!)
     }
-    
-    
-    
     
 }

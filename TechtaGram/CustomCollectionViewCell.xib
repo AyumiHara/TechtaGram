@@ -18,17 +18,14 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="100" height="136"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2gx-qK-bRM">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2gx-qK-bRM">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="20"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                        </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFs-Xd-YyL">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFs-Xd-YyL">
                         <rect key="frame" x="0.0" y="100" width="100" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="36" id="v6Y-7n-EUo"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="kiloji" family="kiloji" pointSize="12"/>
                         <color key="textColor" red="0.40000000000000002" green="0.7725490196" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -36,13 +33,16 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <constraints>
+                <constraint firstItem="2gx-qK-bRM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="DJc-U9-MO4"/>
+                <constraint firstItem="QFs-Xd-YyL" firstAttribute="top" secondItem="2gx-qK-bRM" secondAttribute="bottom" id="KBH-ic-olH"/>
+                <constraint firstItem="2gx-qK-bRM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="XLI-ZI-wqA"/>
+                <constraint firstAttribute="trailing" secondItem="QFs-Xd-YyL" secondAttribute="trailing" id="a8t-Ud-GcY"/>
+                <constraint firstAttribute="bottom" secondItem="QFs-Xd-YyL" secondAttribute="bottom" id="boo-RK-nU8"/>
+                <constraint firstAttribute="trailing" secondItem="2gx-qK-bRM" secondAttribute="trailing" id="hNv-se-h1d"/>
+                <constraint firstItem="QFs-Xd-YyL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="t6j-fP-Fle"/>
+            </constraints>
             <size key="customSize" width="232" height="290"/>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                    <integer key="value" value="20"/>
-                </userDefinedRuntimeAttribute>
-                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="ImageView" destination="2gx-qK-bRM" id="1Rj-Dx-Y5E"/>
                 <outlet property="label" destination="QFs-Xd-YyL" id="y7d-xw-6mE"/>
