@@ -20,6 +20,8 @@ UINavigationControllerDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var originalImage : UIImage!
+    var basicImage : UIImage!
+    
     var filteredImages: Array<(String, UIImage)> = []
     var filter : CIFilter!
     var filerUtil : FilterUtil = FilterUtil()
@@ -37,6 +39,11 @@ UINavigationControllerDelegate {
     var filterchromeImageView : UIImage! =  nil
     var filterblurImageView : UIImage! = nil
     
+    var itu : String = ""
+    var dokode : String = ""
+    var dareto : String = ""
+    var textArray = Array<String>()
+    
     //var assetCollection: PHAssetCollection!
     
     @IBAction func test(_ sender: AnyObject) {
@@ -52,6 +59,8 @@ UINavigationControllerDelegate {
          let blurImage = FilterUtil().blur(originalImage, radius: 3)
          print("\(originalImage.size) -> \(filterblurImageView.size)")
          view.addSubview(UIImageView(image: blurImage)) */
+        
+        
         
         
     }
@@ -101,6 +110,7 @@ UINavigationControllerDelegate {
             if curveImageView == nil {
                 curveImageView = filerUtil.colorFiltercurve(originalImage: originalImage)
             }
+            
             //セピアの結果を返す
             return("カーブ",curveImageView)
         case 1:
@@ -244,15 +254,6 @@ UINavigationControllerDelegate {
             present(alertController, animated: true, completion: nil)
             
             
-            
-            //PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-            //let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(UIImage(CGImage: cgimg))
-            //let assetPlaceHolder = assetChangeRequest.placeholderForCreatedAsset
-            //let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection)
-            //albumChangeRequest!.addAssets([assetPlaceHolder!])
-            //}, completionHandler: nil)
-            
-            
         }
     }
     
@@ -267,28 +268,27 @@ UINavigationControllerDelegate {
     
     
     @IBAction func colorFilter(){
-        cameraImageView.image = filerUtil.colorFilter(originalImage: originalImage)
+        cameraImageView.image = filerUtil.colorFilter(originalImage: basicImage)
         
     }
     @IBAction func colorFilter2(){
-        cameraImageView.image = filerUtil.colorFilter2(originalImage: originalImage)
+        cameraImageView.image = filerUtil.colorFilter2(originalImage: basicImage)
         
     }
     
     @IBAction func colorFiltergray(){
-        cameraImageView.image = filerUtil.colorFiltergrey(originalImage:originalImage)
+        cameraImageView.image = filerUtil.colorFiltergrey(originalImage:basicImage)
         
     }
     
     
     @IBAction func colorFiltercurve(){
-        cameraImageView.image = filerUtil.colorFiltercurve(originalImage: originalImage)
+        cameraImageView.image = filerUtil.colorFiltercurve(originalImage: basicImage)
         
     }
     
     @IBAction func colorfiltersepia(){
-        cameraImageView.image = filerUtil.colorFiltersepia(originalImage: originalImage.ciImage)
-        
+        cameraImageView.image = filerUtil.colorFiltersepia(originalImage: basicImage.ciImage)
         
     }
     
@@ -383,44 +383,164 @@ UINavigationControllerDelegate {
     
     
     func imagePickerController(_ picker: UIImagePickerController,didFinishPickingMediaWithInfo info: [String : Any]) {
-        cameraImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        originalImage = cameraImageView.image!
-        filteredImages = []
+        
+        basicImage  = info[UIImagePickerControllerOriginalImage] as? UIImage
+        
+        cameraImageView.image = basicImage
+        self.filteredImages = []
+        
+
         
         dismiss(animated: true, completion: nil)
-        //
-        filerUtil = FilterUtil()
-        //                 処理に時間かかるからプログレスのダイアログを表示した方がいいよ😄
-        for i in 0...11 {
-            filteredImages.append(setImage(indexPath: i))
-            print(i)
-        }
-        show()
-        
-        NSLog("before apply")
-        
-        //        DispatchQueue.concurrentPerform(iterations: 2) {_ in
-        ////            NSLog("proc start \()")
-        ////
-        ////            filteredImages.append(setImage(indexPath: i))
-        ////
-        ////            NSLog("proc end \(i)")
-        //            print("\($0)concurrentPerform")
-        //        }
-        //
-        //        DispatchQueue.concurrentPerform(iterations: 1) {
-        //            print("\($0). concurrentPerform start")
-        //            filteredImages.append(setImage(indexPath: $0))
-        //            print("\($0). concurrentPerform end ")
-        //
-        //        }
-        
-       // filteredImages.append(setImage(indexPath: 1))
         
         
-        //        NSLog("after apply")
-       // show()
+        let alert:UIAlertController = UIAlertController(title:"タイトル",
+                                                        message: "メッセージ",
+                                                        preferredStyle: UIAlertControllerStyle.alert)
+        
+        let cancelAction:UIAlertAction = UIAlertAction(title: "Cancel",
+                                                       style: UIAlertActionStyle.cancel,
+                                                       handler:{
+                                                        (action:UIAlertAction!) -> Void in
+                                                        print("Cancel")
+        })
+        let defaultAction:UIAlertAction = UIAlertAction(title: "OK",
+                                                        style: UIAlertActionStyle.default,
+                                                        handler:{
+                                                            (action:UIAlertAction!) -> Void in
+                                                            
+                                                            self.textArray.removeAll()
+                                                            let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                                                            if textFields != nil {
+                                                                for textField:UITextField in textFields! {
+                                                                    //各textにアクセス
+                                                                    print(textField.text)
+                                                                    self.textArray.append(textField.text!)
+                                                                    
+                                                                }
+                                                            }
+                                                            
+                                                            
+                                                            self.originalImage = self.resize(ratio: 0.5,image:self.cameraImageView.image!)
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            //
+                                                            self.filerUtil = FilterUtil()
+                                                            //                 処理に時間かかるからプログレスのダイアログを表示した方がいいよ😄
+                                                            for i in 0...11 {
+                                                                var imageResult = self.setImage(indexPath: i)
+                                                                
+                                                                var image :UIImage! = imageResult.1
+                                                                
+                                                                imageResult.1 = self.drawtext(image: image, text:"@" + self.textArray[0] )
+                                                               
+                                                                self.filteredImages.append(imageResult)
+                                                                print(i)
+                                                                imageResult.1 = UIImage()
+                                                                image = nil
+                                                                self.curveImageView  = nil
+                                                                 self.grayImageView = nil
+                                                                 self.sepiaImageView  = nil
+                                                                 self.filter1ImageView  = nil
+                                                                 self.filter2ImageView  = nil
+                                                                 self.filterfadeImageView  = nil
+                                                                 self.filterniseImageView  = nil
+                                                                 self.filterhanImageView  = nil
+                                                                 self.filterinstantImageView  = nil
+                                                                 self.filterprocessImageView  = nil
+                                                                 self.filterchromeImageView  =  nil
+                                                                 self.filterblurImageView
+                                                                    
+                                                                    
+                                                                    
+                                                                    = nil
+                                                                
+                                                            }
+                                                            
+
+                                                            
+                                                            self.cameraImageView.image =
+                                                            self.drawtext(image: self.cameraImageView.image!, text:"@" + self.textArray[0])
+                                                            
+                                                            
+                                                            NSLog("before apply")
+                                                            self.show()
+                                                        
+                                                            
+        })
+
+        
+        
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        
+        //textfiledの追加
+        present(alert, animated: true, completion: nil)
+        
+        alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in
+            text.placeholder = "どこで？"
+            
+        })
+        
+        
+        
     }
+    
+    // 比率だけ指定する場合
+    func resize(ratio: CGFloat,image : UIImage) -> UIImage {
+        let resizedSize = CGSize(width: Int(image.size.width * ratio), height: Int(image.size.height * ratio))
+        UIGraphicsBeginImageContext(resizedSize)
+        image.draw(in : CGRect(x: 0, y: 0, width: resizedSize.width, height: resizedSize.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizedImage!
+    }
+    
+    func drawtext(image : UIImage,text:String) -> UIImage!{
+        UIGraphicsBeginImageContext(image.size)
+        
+        let textFontAttributes = [
+            
+            NSFontAttributeName : UIFont(name:"Arial",size : image.size.width/15)!,NSForegroundColorAttributeName : UIColor.red
+        ]
+        
+        
+        
+        
+        image.draw(in: CGRect(x:0, y:0,width: image.size.width, height:image.size.height))
+        
+       
+        let tx1 = "@"
+        let tx2 = text + "@@"
+        let textWidth = tx2.size(attributes:textFontAttributes).width
+        let textHeight = tx1.size(attributes:textFontAttributes).height
+        let mergin = image.size.width/30
+    
+        let textRect = CGRect(x:image.size.width  - textWidth - mergin, y:image.size.height - textHeight-mergin  ,width:textWidth, height: textHeight)
+//
+        
+        //let textRect = CGRect(x:10, y:10 ,width:300, height: 100)
+        //
+
+
+        
+        text.draw(in: textRect, withAttributes: textFontAttributes)
+        let newimage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        
+        
+        UIGraphicsEndImageContext()
+        
+        return newimage
+        
+        
+        
+        
+        
+    }
+
     
     @IBAction func snsPost(){
         if cameraImageView.image != nil{
